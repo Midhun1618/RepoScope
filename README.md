@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>RepoScope - Hybrid Repository Intelligence System</title>
-</head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #0f172a; color: #e2e8f0; padding: 40px;">
 
   <h1 style="color: #818cf8;">RepoScope</h1>
