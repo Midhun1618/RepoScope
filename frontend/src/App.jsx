@@ -751,7 +751,7 @@ export default function App() {
     if (!repoUrl.trim()) return;
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/analyze", { repoUrl });
+      const res = await axios.post("https://reposcope-backend.onrender.com/analyze", { repoUrl });
       setAnalysis(res.data);
     } catch {
       alert("Analysis failed. Please check the URL and try again.");
