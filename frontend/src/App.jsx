@@ -6,9 +6,6 @@ import {
   PieChart, Pie, Cell, Tooltip,
 } from "recharts";
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   GLOBAL STYLES  (injected once into <head>)
-───────────────────────────────────────────────────────────────────────────── */
 const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
