@@ -99,12 +99,12 @@ function CircularGauge({ value, max = 100, color }) {
 ───────────────────────────────────────────────────────────────────────────── */
 function RiskBadge({ label, level }) {
   const map = {
-    Low:    { bg: "rgba(52,211,153,.12)",  border: "rgba(52,211,153,.3)",  text: "#34d399" },
-    Medium: { bg: "rgba(251,191,36,.12)",  border: "rgba(251,191,36,.3)",  text: "#fbbf24" },
-    High:   { bg: "rgba(239,68,68,.12)",   border: "rgba(239,68,68,.3)",   text: "#ef4444" },
-    Growing:  { bg: "rgba(52,211,153,.12)", border: "rgba(52,211,153,.3)", text: "#34d399" },
+    Low: { bg: "rgba(52,211,153,.12)", border: "rgba(52,211,153,.3)", text: "#34d399" },
+    Medium: { bg: "rgba(251,191,36,.12)", border: "rgba(251,191,36,.3)", text: "#fbbf24" },
+    High: { bg: "rgba(239,68,68,.12)", border: "rgba(239,68,68,.3)", text: "#ef4444" },
+    Growing: { bg: "rgba(52,211,153,.12)", border: "rgba(52,211,153,.3)", text: "#34d399" },
     Emerging: { bg: "rgba(251,191,36,.12)", border: "rgba(251,191,36,.3)", text: "#fbbf24" },
-    Early:    { bg: "rgba(148,163,184,.1)", border: "rgba(148,163,184,.25)", text: "#94a3b8" },
+    Early: { bg: "rgba(148,163,184,.1)", border: "rgba(148,163,184,.25)", text: "#94a3b8" },
   };
   const c = map[level] || map.Low;
   return (
@@ -319,46 +319,63 @@ function LandingScreen({ repoUrl, setRepoUrl, analyzeRepo, loading }) {
           </motion.button>
         </div>
 
-        <p style={{ fontSize: 11, color: "rgba(148,163,184,0.3)", marginTop: 20, letterSpacing: "0.08em" }}>
-          POWERED BY REPOSCOPE INTELLIGENCE ENGINE
+        <p
+          style={{
+            fontSize: 11,
+            color: "rgba(148,163,184,0.3)",
+            marginTop: 20,
+            letterSpacing: "0.08em",
+          }}
+        >POWERED BY <a
+            href="https://voxcom.onrender.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: "none",
+              color: "rgba(148,163,184,0.3)",
+              transition: "color 0.2s ease",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => (e.target.style.color = "#ffffff")}
+            onMouseLeave={(e) => (e.target.style.color = "rgba(148,163,184,0.3)")}
+          >
+          VOXCOM
+          </a>
         </p>
       </motion.div>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   DASHBOARD SCREEN
-───────────────────────────────────────────────────────────────────────────── */
 function Dashboard({ analysis, onReset }) {
   const { overview, owner, metrics, scores, ai_insights } = analysis;
 
   const busFactorRisk =
     metrics.contributors <= 1 ? "High" :
-    metrics.contributors <= 3 ? "Medium" : "Low";
+      metrics.contributors <= 3 ? "Medium" : "Low";
 
   const technicalDebtRisk =
     metrics.refactor_commit_ratio < 5 ? "Medium" : "Low";
 
   const adoptionSignal =
     overview.stars > 50 ? "Growing" :
-    overview.stars > 10 ? "Emerging" : "Early";
+      overview.stars > 10 ? "Emerging" : "Early";
 
   const radarData = [
-    { subject: "Health",       value: scores.health },
-    { subject: "Consistency",  value: scores.consistency },
-    { subject: "Evolution",    value: scores.evolution },
-    { subject: "Safety",       value: 100 - scores.risk },
+    { subject: "Health", value: scores.health },
+    { subject: "Consistency", value: scores.consistency },
+    { subject: "Evolution", value: scores.evolution },
+    { subject: "Safety", value: 100 - scores.risk },
   ];
 
   const donutData = [
     { name: "Features", value: metrics.feature_commit_ratio, color: "#818cf8" },
-    { name: "Fixes",    value: metrics.fix_commit_ratio,     color: "#34d399" },
+    { name: "Fixes", value: metrics.fix_commit_ratio, color: "#34d399" },
     { name: "Refactor", value: metrics.refactor_commit_ratio, color: "#f59e0b" },
   ];
 
   const healthDelta = scores.health - scores.risk;
-  const gaugeColor  = healthDelta > 70 ? "#34d399" : healthDelta > 40 ? "#fbbf24" : "#ef4444";
+  const gaugeColor = healthDelta > 70 ? "#34d399" : healthDelta > 40 ? "#fbbf24" : "#ef4444";
 
   const memberSince = owner.created_at
     ? new Date(owner.created_at).getFullYear()
@@ -479,10 +496,10 @@ function Dashboard({ analysis, onReset }) {
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               {[
-                { label: "Followers",    val: owner.followers    },
+                { label: "Followers", val: owner.followers },
                 { label: "Public Repos", val: owner.public_repos },
-                { label: "⭐ Stars",     val: overview.stars     },
-                { label: "Forks",        val: overview.forks     },
+                { label: "⭐ Stars", val: overview.stars },
+                { label: "Forks", val: overview.forks },
               ].map(({ label, val }, i) => (
                 <div key={i} style={{
                   background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 12px",
@@ -585,8 +602,8 @@ function Dashboard({ analysis, onReset }) {
               <CircularGauge value={healthDelta} color={gaugeColor} />
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, width: "100%" }}>
                 {[
-                  { label: "HEALTH", val: scores.health,  color: "#34d399", bg: "rgba(52,211,153,.08)",  border: "rgba(52,211,153,.15)" },
-                  { label: "RISK",   val: scores.risk,    color: "#818cf8", bg: "rgba(99,102,241,.08)",  border: "rgba(99,102,241,.15)" },
+                  { label: "HEALTH", val: scores.health, color: "#34d399", bg: "rgba(52,211,153,.08)", border: "rgba(52,211,153,.15)" },
+                  { label: "RISK", val: scores.risk, color: "#818cf8", bg: "rgba(99,102,241,.08)", border: "rgba(99,102,241,.15)" },
                 ].map(({ label, val, color, bg, border }, i) => (
                   <div key={i} style={{
                     background: bg, borderRadius: 10, padding: "10px 12px",
@@ -610,8 +627,8 @@ function Dashboard({ analysis, onReset }) {
             <SectionLabel>Forward Forecast</SectionLabel>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
               <RiskBadge label={`Bus Factor · ${busFactorRisk} Risk`} level={busFactorRisk} />
-              <RiskBadge label={`Tech Debt · ${technicalDebtRisk}`}   level={technicalDebtRisk} />
-              <RiskBadge label={`Adoption · ${adoptionSignal}`}       level={adoptionSignal} />
+              <RiskBadge label={`Tech Debt · ${technicalDebtRisk}`} level={technicalDebtRisk} />
+              <RiskBadge label={`Adoption · ${adoptionSignal}`} level={adoptionSignal} />
             </div>
             <div style={{
               padding: "12px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 12,
@@ -646,9 +663,9 @@ function Dashboard({ analysis, onReset }) {
             <SectionLabel>Evolution Summary</SectionLabel>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {[
-                { label: "Total Commits",  val: metrics.total_commits,  icon: "◎", color: "#818cf8" },
-                { label: "Active Months",  val: metrics.active_months,  icon: "◈", color: "#06b6d4" },
-                { label: "Contributors",   val: metrics.contributors,   icon: "◉", color: "#34d399" },
+                { label: "Total Commits", val: metrics.total_commits, icon: "◎", color: "#818cf8" },
+                { label: "Active Months", val: metrics.active_months, icon: "◈", color: "#06b6d4" },
+                { label: "Contributors", val: metrics.contributors, icon: "◉", color: "#34d399" },
               ].map(({ label, val, icon, color }, i) => (
                 <motion.div key={i}
                   whileHover={{ scale: 1.01, x: 4 }}
@@ -702,7 +719,7 @@ function Dashboard({ analysis, onReset }) {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginBottom: 16 }}>
               {[
-                { label: "Development Pattern",     val: ai_insights?.development_pattern,     icon: "⬡", color: "#818cf8" },
+                { label: "Development Pattern", val: ai_insights?.development_pattern, icon: "⬡", color: "#818cf8" },
                 { label: "Maintainability Outlook", val: ai_insights?.maintainability_outlook, icon: "◈", color: "#34d399" },
               ].map(({ label, val, icon, color }, i) => (
                 <div key={i} style={{
@@ -743,9 +760,9 @@ function Dashboard({ analysis, onReset }) {
    ROOT APP
 ───────────────────────────────────────────────────────────────────────────── */
 export default function App() {
-  const [repoUrl,  setRepoUrl]  = useState("");
+  const [repoUrl, setRepoUrl] = useState("");
   const [analysis, setAnalysis] = useState(null);
-  const [loading,  setLoading]  = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const analyzeRepo = async () => {
     if (!repoUrl.trim()) return;
